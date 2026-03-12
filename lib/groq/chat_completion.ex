@@ -100,4 +100,8 @@ defmodule Groq.ChatCompletion do
       {:error, json}
     end
   end
+
+  defp handle_response({:error, reason}) do
+    {:error, reason}
+  end
 end

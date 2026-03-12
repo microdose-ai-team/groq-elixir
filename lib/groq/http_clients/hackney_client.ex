@@ -7,6 +7,9 @@ defmodule Groq.HackneyClient do
   def post(url, headers, body) do
     hackney_opts =
       Groq.Config.hackney_opts()
+      |> Keyword.put_new(:recv_timeout, 30_000)
+      |> Keyword.put_new(:connect_timeout, 120_000)
+      |> Keyword.put_new(:timeout, 120_000)
       |> Keyword.put_new(:pool, @hackney_pool_name)
 
     case :hackney.request(:post, url, headers, body, [:with_body] ++ hackney_opts) do

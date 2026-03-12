@@ -18,7 +18,7 @@ defmodule Groq.Sender do
   @spec send_request(GenServer.server(), Request.t()) :: HTTPClient.response()
   def send_request(client, %Request{} = req) do
     random_index = Enum.random(1..SenderPool.pool_size())
-    GenServer.call({:via, Registry, {@registry, random_index}}, {:send, client, req})
+    GenServer.call({:via, Registry, {@registry, random_index}}, {:send, client, req}, 60_000)
   end
 
   ## State
